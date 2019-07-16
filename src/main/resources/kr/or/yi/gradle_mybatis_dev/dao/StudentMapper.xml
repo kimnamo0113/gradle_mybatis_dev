@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="kr.or.yi.gradle_mybatis_dev.dao.StudentMapper">
+	<sql id="whereSql">
+		select stud_id,name,email,dob,phone
+		from students where stud_id=#{studId};
+	</sql>
+
+	<select id="selectStudentByNo" parameterType="Student" resultType="Student">
+		<include refid="whereSql"></include>
+	</select>
+	
+	
+	<resultMap type="Student" id="stdResult">
+		<id column="stud_id" property="studId"/>
+		<result column="f" property="phone.countryCode"/>
+		<result column="m" property="phone.stateCode"/>
+		<result column="l" property="phone.number"/>
+	</resultMap>
+	
+	<select id="selectStudentByNoWithResultMap" parameterType="Student" resultMap="stdResult">
+		select stud_id,name,email,dob,substring(phone,1,3) f,substring(phone,5,3) m,substring(phone,9,4) l
+		from students where stud_id=#{stdId};
+	</select>
+</mapper>

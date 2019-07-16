@@ -6,4 +6,6 @@ select * from courses;
 select * from students;
 select * from tutors;
 
+select stud_id,name,email,dob,substring(phone,1,3) f,substring(phone,5,3) m,substring(phone,9,4) l
+from students where stud_id=1;
 
