@@ -1,13 +1,21 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.yi.gradle_mybatis_dev.dao.StudentMapper">
-	<sql id="whereSql">
+	<sql id="selectSql">
 		select stud_id,name,email,dob,phone
-		from students where stud_id=#{studId};
+		from students
+	</sql>
+	<sql id="whereStmt">
+		<where>
+			<if test="studId!=null">
+				stud_id=#{studId}
+			</if>		
+		</where>
 	</sql>
 
 	<select id="selectStudentByNo" parameterType="Student" resultType="Student">
-		<include refid="whereSql"></include>
+		<include refid="selectSql"/>
+		<include refid="whereStmt"/>
 	</select>
 	
 	
@@ -22,4 +30,30 @@
 		select stud_id,name,email,dob,substring(phone,1,3) f,substring(phone,5,3) m,substring(phone,9,4) l
 		from students where stud_id=#{stdId};
 	</select>
+	
+	<select id="selectStudentByAll" resultType="Student">
+		<include refid="selectSql"/>
+	</select>
+	
+	<insert id="insertStudent" parameterType="Student">
+		INSERT INTO mybatis_dev.students
+		(NAME, EMAIL, PHONE, DOB)
+		VALUES(#{name},#{email},#{phone},#{dob});
+	</insert>
+	<insert id="insertStudentAutoinc" parameterType="Student" useGeneratedKeys="true" keyProperty="studId">
+		INSERT INTO mybatis_dev.students
+		(NAME, EMAIL, PHONE, DOB)
+		VALUES(#{name},#{email},#{phone},#{dob});
+	</insert>
+	
+	<update id="updateStudent" parameterType="Student">
+		UPDATE mybatis_dev.students
+		SET NAME=#{name}, EMAIL=#{email}, PHONE=#{phone}, DOB=#{dob}
+		WHERE STUD_ID=#{studId};
+	</update>
+	
+	<delete id="deleteStudent" parameterType="int">
+		DELETE FROM mybatis_dev.students
+		WHERE STUD_ID=#{studId};
+	</delete>
 </mapper>

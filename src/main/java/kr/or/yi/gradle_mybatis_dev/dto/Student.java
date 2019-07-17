@@ -8,7 +8,7 @@ public class Student {
 	private String email;
 	private PhoneNumber phone;
 	private Date dob;
-
+	
 	public int getStudId() {
 		return studId;
 	}
