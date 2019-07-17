@@ -69,4 +69,16 @@ public class StudentMapperImpl implements StudentMapper {
 		
 	}
 
+	@Override
+	public void test() {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			sqlSession.update(namespace+".test");
+			sqlSession.commit();
+			
+		}
+	}
+	
+	
+
+
 }

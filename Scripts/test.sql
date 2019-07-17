@@ -12,3 +12,12 @@ from students where stud_id=1;
 select stud_id, name, email, phone, dob from students;
 
 desc students;
+
+alter table students auto_increment=100;
+
+
+select last_insert_id() from students;
+
+
+
+s

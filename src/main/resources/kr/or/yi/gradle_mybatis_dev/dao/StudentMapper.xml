@@ -56,4 +56,9 @@
 		DELETE FROM mybatis_dev.students
 		WHERE STUD_ID=#{studId};
 	</delete>
+	
+	<update id="test">
+		alter table students auto_increment=100;
+		<!-- alter table students auto_increment=(select last_insert_id() from students); -->
+	</update>
 </mapper>
