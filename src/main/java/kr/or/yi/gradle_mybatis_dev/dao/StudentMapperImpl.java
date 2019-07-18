@@ -1,6 +1,7 @@
 package kr.or.yi.gradle_mybatis_dev.dao;
 
 import java.util.List;
+import java.util.Map;
 
 import org.apache.ibatis.session.SqlSession;
 
@@ -75,6 +76,13 @@ public class StudentMapperImpl implements StudentMapper {
 			sqlSession.update(namespace+".test");
 			sqlSession.commit();
 			
+		}
+	}
+
+	@Override
+	public List<Map<String, Object>> selectStudentMapByAll() {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectList(namespace+".selectStudentMapByAll");
 		}
 	}
 	

@@ -18,6 +18,4 @@ alter table students auto_increment=100;
 
 select last_insert_id() from students;
 
-
-
-s
+SHOW INDEX FROM students;
