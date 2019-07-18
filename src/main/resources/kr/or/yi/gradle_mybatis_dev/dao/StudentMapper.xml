@@ -19,12 +19,26 @@
 	</select>
 	
 	
-	<resultMap type="Student" id="stdResult">
+	
+	
+	<resultMap type="Student" id="resultStudent">
 		<id column="stud_id" property="studId"/>
+		<result column="name" property="name"/>
+		<result column="email" property="email"/>
+		<result column="phone" property="phone"/>
+		<result column="dob" property="dob"/>
+	</resultMap>
+	
+	<resultMap type="Student" id="resultExtStudent" extends="resultStudent">
+		<association property="address" resultMap="kr.or.yi.gradle_mybatis_dev.dao.AddressMapper.resultAddress"/>
+	</resultMap>
+	
+	<resultMap type="Student" id="stdResult" extends="resultStudent">
 		<result column="f" property="phone.countryCode"/>
 		<result column="m" property="phone.stateCode"/>
 		<result column="l" property="phone.number"/>
 	</resultMap>
+	
 	
 	<select id="selectStudentByNoWithResultMap" parameterType="Student" resultMap="stdResult">
 		select stud_id,name,email,dob,substring(phone,1,3) f,substring(phone,5,3) m,substring(phone,9,4) l
@@ -65,4 +79,23 @@
 	<select id="selectStudentMapByAll" resultType="map">
 		<include refid="selectSql"/>
 	</select>
+
+	
+<!-- 	<resultMap type="Student" id="resultStudent">
+		<id column="stud_id" property="studId"/>
+		<result column="addr_id" property="address.addrId"/>
+		<result column="street" property="address.street"/>
+		<result column="city" property="address.city"/>
+		<result column="state" property="address.state"/>
+		<result column="zip" property="address.zip"/>
+		<result column="country" property="address.country"/>
+	</resultMap> -->
+	
+	<select id="selectStudentByNoResultMapExtends" parameterType="Student" resultMap="resultExtStudent">
+		select stud_id, name,email,phone,a.addr_id,street,city,state,zip,country
+		from students s left join addresses a on s.addr_id=a.addr_id
+		<include refid="whereStmt"/>
+	</select>
+	
+	
 </mapper>
