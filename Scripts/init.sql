@@ -57,6 +57,13 @@ CREATE TABLE mybatis_dev.COURSE_ENROLLMENT(
   CONSTRAINT FK_ENROLLMENT_COURSE FOREIGN KEY (COURSE_ID) REFERENCES mybatis_dev.COURSES (COURSE_ID)
 );
 
+-- userPic 테이블 추가
+create table mybatis_dev.user_pics(
+	id integer auto_increment primary key,
+	name varchar(50) not null,
+	pic longblob,
+	bio longtext
+);
 
 
 

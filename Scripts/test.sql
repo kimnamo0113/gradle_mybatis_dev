@@ -41,3 +41,7 @@ select * from students;
 desc students;
 
 show tables;
+
+select * from user_pics;
+
+desc user_pics;
