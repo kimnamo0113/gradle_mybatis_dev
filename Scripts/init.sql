@@ -58,6 +58,9 @@ CREATE TABLE mybatis_dev.COURSE_ENROLLMENT(
 );
 
 
+
+
+
 -- 계정과 권한부여
 grant all privileges 
 on mybatis_dev.* 

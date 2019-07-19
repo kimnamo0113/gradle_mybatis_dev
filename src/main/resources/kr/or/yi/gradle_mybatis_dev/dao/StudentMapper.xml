@@ -2,7 +2,7 @@
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="kr.or.yi.gradle_mybatis_dev.dao.StudentMapper">
 	<sql id="selectSql">
-		select stud_id,name,email,dob,phone
+		select stud_id,name,email,dob,phone,gender
 		from students
 	</sql>
 	<sql id="whereStmt">
@@ -27,6 +27,7 @@
 		<result column="email" property="email"/>
 		<result column="phone" property="phone"/>
 		<result column="dob" property="dob"/>
+		<result column="gender" property="gender"/>
 	</resultMap>
 	
 	<resultMap type="Student" id="resultExtStudent" extends="resultStudent">
@@ -97,5 +98,27 @@
 		<include refid="whereStmt"/>
 	</select>
 	
+	<insert id="insertStudentEnum" parameterType="Student">
+		INSERT INTO mybatis_dev.students
+		(Stud_id,NAME, EMAIL, PHONE, DOB, GENDER)
+		VALUES(#{studId},#{name},#{email},#{phone},#{dob},#{gender});
+	</insert>
 	
 </mapper>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
