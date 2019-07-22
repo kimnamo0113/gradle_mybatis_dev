@@ -6,6 +6,7 @@ import static org.junit.Assert.*;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -184,4 +185,45 @@ public class StudentMapperTest extends AbstractTest {
 		log.debug(selStd+"");
 	}
 	
+	@Test
+	public void test11SelectStudentbyMap() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Map<String,String> map = new HashMap<String, String>();
+		map.put("name", "Timothy");
+		map.put("email","timothy@gmail.com");
+		
+		Student std=stdDao.selectStudentByMap(map);
+		log.debug(std.toString());
+		
+		map.remove("email");
+		std=stdDao.selectStudentByMap(map);
+		log.debug(std.toString());
+		
+		map.clear();
+		map.put("email","timothy@gmail.com");
+		std=stdDao.selectStudentByMap(map);
+		log.debug(std.toString());
+		
+		Assert.assertNotNull(std);
+	}
+	
+	
+	@Test
+	public void test12SelectStudentForMap() {
+		log.debug(Thread.currentThread().getStackTrace()[1].getMethodName() + "()");
+		Map<Integer, String> result = stdDao.selectStudentForMap();
+		Assert.assertNotNull(result);
+		
+		for(Entry<Integer, String> e : result.entrySet()) {
+			log.debug(String.format("%d -> %s",	e.getKey(),e.getValue()));
+		}
+	}
 }
+
+
+
+
+
+
+
+

@@ -104,6 +104,24 @@
 		VALUES(#{studId},#{name},#{email},#{phone},#{dob},#{gender});
 	</insert>
 	
+	<sql id="whereNameAndEmail">
+		<where>
+			<if test="name != null">
+				name=#{name}
+			</if>
+			<if test="email != null">
+				and email=#{email}
+			</if>
+		</where>
+	</sql>
+	<select id="selectStudentByMap" parameterType="map" resultType="Student">
+		<include refid="selectSql"/>
+		<include refid="whereNameAndEmail"/>
+	</select>
+	
+	<select id="selectStudentForMap" resultType="Student">
+		select stud_id, name from students
+	</select>
 </mapper>
 
 

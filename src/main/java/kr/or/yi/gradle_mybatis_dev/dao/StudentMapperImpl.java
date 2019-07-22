@@ -1,8 +1,11 @@
 package kr.or.yi.gradle_mybatis_dev.dao;
 
+import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.apache.ibatis.session.ResultContext;
+import org.apache.ibatis.session.ResultHandler;
 import org.apache.ibatis.session.SqlSession;
 
 import kr.or.yi.gradle_mybatis_dev.dto.Student;
@@ -99,6 +102,29 @@ public class StudentMapperImpl implements StudentMapper {
 			int res = sqlSession.insert(namespace+".insertStudentEnum",student);
 			sqlSession.commit();
 			return res;
+		}
+	}
+
+	@Override
+	public Student selectStudentByMap(Map<String, String> map) {
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			return sqlSession.selectOne(namespace+".selectStudentByMap",map);
+		}
+	}
+
+	@Override
+	public Map<Integer, String> selectStudentForMap() {
+		Map<Integer, String> map = new HashMap<Integer, String>();
+		ResultHandler<Student> resultHandler = new ResultHandler<Student>() {
+			@Override
+			public void handleResult(ResultContext<? extends Student> resultContext) {
+				Student std = resultContext.getResultObject();
+				map.put(std.getStudId(), std.getName());
+			}
+		};
+		try(SqlSession sqlSession = MyBatisSqlSessionFactory.openSession();){
+			sqlSession.selectList(namespace+".selectStudentForMap", resultHandler);
+			return map;
 		}
 	}
 	
