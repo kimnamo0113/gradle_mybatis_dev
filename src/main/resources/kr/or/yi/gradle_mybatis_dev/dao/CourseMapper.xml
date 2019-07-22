@@ -8,4 +8,39 @@
 		<result column="start_date" property="startDate"/>
 		<result column="end_date" property="endDate"/>
 	</resultMap>
+	<select id="selectCoursesbyCondition" parameterType="map" resultMap="resultCourse">
+		select course_id, name, description, start_date, end_date
+		from courses
+		<where>
+			<if test="courseId!=null">
+				and course_id=#{courseId}
+			</if>
+			<if test="courseName!=null">
+				and name like #{courseName}
+			</if>
+			<if test="startDate!=null">
+				and start_date &gt;=#{startDate}
+			</if>
+			<if test="endDate!=null">
+				and end_date &gt;=#{endDate}
+			</if>
+		</where>
+	</select>
+	
+	
+	<select id="selectCoursesbyChoosee" parameterType="map" resultMap="resultCourse">
+		select course_id, name, description, start_date, end_date
+		from courses
+		<choose>
+			<when test="searchBy=='Tutor'"> <!-- map.get(searchby)가 'Tutor'와 같으면면 -->
+				where tutor_id=#{tutorId} <!-- map.get(tutorId) -->
+			</when>
+			<when test="searchBy=='CourseName'">
+				where name like #{courseName}
+			</when>
+			<otherwise>
+				where end_date &gt;=now()
+			</otherwise>
+		</choose>
+	</select>
 </mapper>
